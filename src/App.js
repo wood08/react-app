@@ -9,6 +9,7 @@ class App extends Component {
         super(props);
         this.state = {
             mode:"read"
+            ,selected_content_id:2
             ,subject:{title:"WEB", sub:"World Wide Wed!"}
             ,welcome:{title:"Welcome", desc:"Hello React"}
             ,contents:[
@@ -25,22 +26,29 @@ class App extends Component {
             _title = this.state.welcome.title;
             _desc = this.state.welcome.desc;
         } else if(this.state.mode === "read"){
-            _title = this.state.contents[0].title;
-            _desc = this.state.contents[0].desc;
+            for(let i=0; i<this.state.contents.length; i++){
+                if( this.state.selected_content_id == this.state.contents[i].id){
+                    _title = this.state.contents[i].title;
+                    _desc = this.state.contents[i].desc;
+                    break;
+                }
+            }
         }
         return (
             <div className="App">
-                {/*<Subject title={this.state.subject.title} sub={this.state.subject.sub}></Subject>*/}
-                <header>
-                    <h1><a href="/" onClick={function(e){
-                        console.log(e);
-                        e.preventDefault(); // a 태그 이벤트의 기본동작 막기
+                <Subject
+                    title={this.state.subject.title}
+                    sub={this.state.subject.sub}
+                    onChangePage={function(){
                         this.setState({mode:"welcome"});
-                    }.bind(this)    // function 안에서 this 값을 쓸 수 있도록 추가
-                    }>{this.state.subject.title}</a></h1>
-                    {this.state.subject.sub}
-                </header>
-                <TOC data={this.state.contents}></TOC>
+                    }.bind(this)}
+                ></Subject>
+                <TOC
+                    onChangePage={function(id){
+                        this.setState({mode:"read", selected_content_id:id});
+                    }.bind(this)}
+                    data={this.state.contents}
+                ></TOC>
                 <Content title={_title} desc={_desc}></Content>
             </div>
         );

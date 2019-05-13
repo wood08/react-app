@@ -6,7 +6,15 @@ class TOC extends Component {
         let i = 0;
         const lists = [];
         while(i < data.length){
-            lists.push(<li key={data[i].id}><a href={"/content/"+data[i].id}>{data[i].title}</a></li>);
+            lists.push(
+                <li key={data[i].id}>
+                    <a href={"/content/"+data[i].id}
+                       onClick={function(id, e){
+                           e.preventDefault();
+                           this.props.onChangePage(id);
+                    }.bind(this, data[i].id)}>{data[i].title}</a>
+                </li>
+            );
             i = i + 1;
         }
         return (
