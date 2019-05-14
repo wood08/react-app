@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
 
 class TOC extends Component {
+    // concat 과 shouldComponentUpdate 로 성능향상 가능
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if(this.props.data === nextProps.data){
+            return false;   // render 미실행
+        }
+        return true;    // render 실행
+    }
+
     render(){
         const data = this.props.data;
         let i = 0;
