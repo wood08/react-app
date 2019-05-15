@@ -12,7 +12,7 @@ class App extends Component {
         super(props);
         this.max_content_id = 3;
         this.state = {
-            mode:"create"
+            mode:"welcome"
             ,selected_content_id:2
             ,subject:{title:"WEB", sub:"World Wide Wed!"}
             ,welcome:{title:"Welcome", desc:"Hello React"}
@@ -81,7 +81,20 @@ class App extends Component {
                     data={this.state.contents}
                 ></TOC>
                 <Control onChangeMode={function(mode){
-                    this.setState({mode:mode});
+                    if(mode === 'delete'){
+                        if(window.confirm("삭제하겠습니까?")){
+                            const _contents = Array.from(this.state.contents);  // 원본을 바꾸지 않기 위해 새로 배열 만듬
+                            for(let i=0; i<_contents.length; i++){
+                                if(_contents[i].id === this.state.selected_content_id){
+                                    _contents.splice(i,1);
+                                    break;
+                                }
+                                this.setState({contents:_contents, mode:"welcome"});
+                            }
+                        }
+                    } else {
+                        this.setState({mode:mode});
+                    }
                 }.bind(this)}></Control>
                 {this.getContent()}
             </div>
