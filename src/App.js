@@ -7,6 +7,8 @@ import UpdateContent from './components/UpdateContent';
 import Subject from './components/Subject';
 import Control from './components/Control';
 
+import IFrame from './components/IFrame';
+
 class App extends Component {
     constructor(props){
         super(props);
@@ -20,9 +22,12 @@ class App extends Component {
                 {id:1, title:"HTML", desc:"HTML is for information"}
                 ,{id:2, title:"CSS", desc:"CSS is for design"}
                 ,{id:3, title:"JavaScript", desc:"JavaScript is for interactive"}
-            ]
+            ],
+
+            iframe:''
         };
     }
+
     getReadContent(){
         for(let i=0; i<this.state.contents.length; i++){
             if( this.state.selected_content_id === this.state.contents[i].id){
@@ -97,8 +102,17 @@ class App extends Component {
                     }
                 }.bind(this)}></Control>
                 {this.getContent()}
+
+                <input type="button" value="popup" onClick={(e)=>this.CallPopUp()}></input>
+                {this.state.iframe}
             </div>
         );
+    }
+
+    CallPopUp(e){
+        this.setState({
+            iframe: <IFrame />
+        });
     }
 }
 
