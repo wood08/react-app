@@ -7,8 +7,6 @@ import UpdateContent from './components/UpdateContent';
 import Subject from './components/Subject';
 import Control from './components/Control';
 
-import IFrame from './components/IFrame';
-
 class App extends Component {
     constructor(props){
         super(props);
@@ -23,8 +21,6 @@ class App extends Component {
                 ,{id:2, title:"CSS", desc:"CSS is for design"}
                 ,{id:3, title:"JavaScript", desc:"JavaScript is for interactive"}
             ],
-
-            iframe:''
         };
     }
 
@@ -104,15 +100,14 @@ class App extends Component {
                 {this.getContent()}
 
                 <input type="button" value="popup" onClick={(e)=>this.CallPopUp()}></input>
-                {this.state.iframe}
             </div>
         );
     }
 
     CallPopUp(e){
-        this.setState({
-            iframe: <IFrame />
-        });
+        const popUrl = "http://google.com";
+        const popUpOption = "width=10, height=10, resizable=no. scrollbars=no. status=no;";
+        window.open(popUrl, popUpOption);
     }
 }
 
